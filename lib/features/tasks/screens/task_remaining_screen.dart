@@ -130,7 +130,7 @@ class _RemainingTile extends ConsumerWidget {
           width: 52,
           height: 52,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Icon(

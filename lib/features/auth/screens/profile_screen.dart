@@ -11,12 +11,11 @@ import '../../../data/models/task_model.dart';
 import '../../../core/theme/app_colors.dart';
 
 // ── Custom Colors from M3 Mockup ─────────────
-const _m3ProfileBgTop      = Color(0xFFC7D7DF); // Light slate/blue for top half
-const _m3ProfileBgBottom   = Color(0xFFF0FDF4); // Light mint for bottom half
-const _m3ProfileCardBg     = Color(0xFFCEE0CC); // Light greenish for stats cards (approximate)
-const _m3IconColor         = Color(0xFF3F4947); // Dark grayish green for icons
-const _m3TextColor         = Color(0xFF1A1C1B); // Almost black for text
-const _m3PrimaryDark       = Color(0xFF2E4C41); // Dark green for avatar border
+// ── Refined Colors (Neutral Slate/Gray) ─────────────
+const _refinedProfileBgTop    = Color(0xFFDFE8ED); // Clean slate-blue for top half
+const _refinedProfileIcon     = Color(0xFF475569); // Slate 600
+const _refinedProfileText     = Color(0xFF1E293B); // Slate 900
+const _refinedAvatarBorder    = Color(0xFF64748B); // Slate 500
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -26,13 +25,13 @@ class ProfileScreen extends ConsumerWidget {
     final userAsync = ref.watch(currentUserProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bgTop = isDark ? Color(0xFF1F2933) : _m3ProfileBgTop; // Dark grayish blue
-    final bgBottom = isDark ? AppColors.surfaceDark : _m3ProfileBgBottom;
-    final cardBg = isDark ? AppColors.cardDarkElevated : Colors.white;
-    final statCardBg = isDark ? AppColors.surfaceDark : const Color(0xFFD3E0DB);
-    final iconColor = isDark ? Colors.white70 : _m3IconColor;
-    final textColor = isDark ? Colors.white : _m3TextColor;
-    final avatarBorder = isDark ? AppColors.primary : _m3PrimaryDark;
+    final bgTop = isDark ? const Color(0xFF1F2933) : _refinedProfileBgTop;
+    final bgBottom = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
+    final cardBg = isDark ? AppColors.cardDarkElevated : AppColors.cardLight;
+    final statCardBg = isDark ? AppColors.surfaceDark : const Color(0xFFF8FAFC); // Neutral Slate 50
+    final iconColor = isDark ? Colors.white70 : _refinedProfileIcon;
+    final textColor = isDark ? Colors.white : _refinedProfileText;
+    final avatarBorder = isDark ? AppColors.primary : _refinedAvatarBorder;
 
     return Scaffold(
       backgroundColor: bgBottom,
@@ -68,14 +67,20 @@ class ProfileScreen extends ConsumerWidget {
       ),
       body: userAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error:   (e, _) => Center(child: Text('Error: $e')),
+        error:   (e, _) {
+          final msg = e.toString();
+          if (msg.contains('permission-denied') || msg.contains('PERMISSION_DENIED')) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Center(child: Text('Error: $msg'));
+        },
         data:    (user) {
           if (user == null) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Icon(Icons.person_off_rounded, size: 64, color: iconColor.withOpacity(0.5)),
+                   Icon(Icons.person_off_rounded, size: 64, color: iconColor.withValues(alpha: 0.5)),
                    const SizedBox(height: 16),
                    Text(
                      'Profile Not Initialized',
@@ -94,7 +99,10 @@ class ProfileScreen extends ConsumerWidget {
                    ),
                    const SizedBox(height: 12),
                    TextButton.icon(
-                     onPressed: () => ref.read(authNotifierProvider.notifier).signOut().then((_) => context.go('/login')),
+                     onPressed: () async {
+                       await ref.read(authNotifierProvider.notifier).signOut();
+                       if (context.mounted) context.go('/login');
+                     },
                      icon: const Icon(Icons.logout_rounded),
                      label: const Text('Log Out'),
                    ),
@@ -268,7 +276,7 @@ class ProfileScreen extends ConsumerWidget {
                     iconColor: iconColor,
                     textColor: textColor,
                     onTap: () async {
-                      final Uri url = Uri.parse('mailto:support@example.com?subject=Project Plan App Feedback');
+                      final Uri url = Uri.parse('mailto:support@example.com?subject=Pie App Feedback');
                       if (!await launchUrl(url)) {
                         if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not open email client'), behavior: SnackBarBehavior.floating));
                       }

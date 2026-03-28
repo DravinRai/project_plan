@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/utils/firestore_utils.dart';
 
 /// Firestore document model for /users/{uid}/checklists/{listId}
 class ChecklistItem {
@@ -24,7 +25,7 @@ class ChecklistItem {
       title:       data['title']       as String?  ?? '',
       isCompleted: data['isCompleted'] as bool?    ?? false,
       date:        data['date']        as String?,
-      createdAt:   (data['createdAt']  as Timestamp).toDate(),
+      createdAt:   FirestoreUtils.parseDateTime(data['createdAt']),
     );
   }
 

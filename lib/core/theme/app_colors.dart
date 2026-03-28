@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Central color tokens for Project Plan.
+/// Central color tokens for Pie.
 /// Follows the blueprint color semantics:
 ///   Blue   → ASSIGNED tasks
 ///   Green  → COMPLETED tasks

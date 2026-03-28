@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/utils/firestore_utils.dart';
 
 /// Firestore document model for /users/{uid}
 class UserModel {
@@ -29,11 +30,9 @@ class UserModel {
       email:                data['email']        as String? ?? '',
       displayName:          data['displayName']  as String? ?? '',
       photoURL:             data['photoURL']     as String? ?? '',
-      createdAt:            (data['createdAt']   as Timestamp).toDate(),
+      createdAt:            FirestoreUtils.parseDateTime(data['createdAt']),
       streakCount:          data['streakCount']  as int?    ?? 0,
-      lastActiveDate:       data['lastActiveDate'] != null
-                              ? (data['lastActiveDate'] as Timestamp).toDate()
-                              : null,
+      lastActiveDate:       FirestoreUtils.tryParseDateTime(data['lastActiveDate']),
       notificationsEnabled: data['notificationsEnabled'] as bool? ?? true,
     );
   }

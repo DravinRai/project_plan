@@ -255,7 +255,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             image: isNetwork ? NetworkImage(bgUrl) as ImageProvider : FileImage(File(bgUrl)),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              isDark ? Colors.black.withOpacity(0.7) : Colors.white.withOpacity(0.8),
+              isDark ? Colors.black.withValues(alpha: 0.7) : Colors.white.withValues(alpha: 0.8),
               BlendMode.darken,
             ),
           ),
@@ -297,7 +297,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ChoiceChip(
                   label: const Text('System'),
                   selected: currentMode == ThemeMode.system,
-                  selectedColor: const Color(0xFFD3643B).withOpacity(0.2),
+                  selectedColor: const Color(0xFFD3643B).withValues(alpha: 0.2),
                   labelStyle: TextStyle(
                     color: Colors.black87,
                     fontWeight: currentMode == ThemeMode.system ? FontWeight.bold : FontWeight.normal,
@@ -307,7 +307,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ChoiceChip(
                   label: const Text('Light'),
                   selected: currentMode == ThemeMode.light,
-                  selectedColor: const Color(0xFFD3643B).withOpacity(0.2),
+                  selectedColor: const Color(0xFFD3643B).withValues(alpha: 0.2),
                   labelStyle: TextStyle(
                     color: Colors.black87,
                     fontWeight: currentMode == ThemeMode.light ? FontWeight.bold : FontWeight.normal,
@@ -317,7 +317,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ChoiceChip(
                   label: const Text('Dark'),
                   selected: currentMode == ThemeMode.dark,
-                  selectedColor: const Color(0xFFD3643B).withOpacity(0.2),
+                  selectedColor: const Color(0xFFD3643B).withValues(alpha: 0.2),
                   labelStyle: TextStyle(
                     color: Colors.black87,
                     fontWeight: currentMode == ThemeMode.dark ? FontWeight.bold : FontWeight.normal,
@@ -329,7 +329,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 16),
             const Text('Color Way', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Wrap(
+            const Wrap(
               spacing: 12,
               runSpacing: 12,
               children: [

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "313969971820",
+    "project_id": "project-plan-dravin-85713",
+    "storage_bucket": "project-plan-dravin-85713.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313969971820:android:dc73353c6730cb5fd23e49",
+        "android_client_info": {
+          "package_name": "com.ankitrai.pie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313969971820-hk0seb3c4heic7o0j5d1mcu7s4iqb3l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALInvdQvgx107dMLOFBvHk-triRh1yFLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313969971820-g2sc3eoi3mrbhlu6grigvcoueq6ld0nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

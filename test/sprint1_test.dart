@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:project_plan/features/quote/providers/quote_provider.dart';
 import 'package:project_plan/features/quote/data/quotes_data.dart';
 import 'package:project_plan/data/models/task_model.dart';
 

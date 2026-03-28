@@ -17,6 +17,9 @@ import '../../features/search/screens/search_screen.dart';
 import '../../features/tasks/screens/task_remaining_screen.dart';
 import '../../features/tasks/screens/task_editor_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
+import '../../features/settings/screens/privacy_policy_screen.dart';
+import '../../features/settings/screens/terms_of_service_screen.dart';
+import '../../features/settings/screens/feedback_screen.dart';
 import '../../features/notes/screens/notes_screen.dart';
 import '../../data/models/task_model.dart';
 
@@ -39,7 +42,9 @@ enum AppRoute {
   notes('notes'),
   streakHistory('streak-history'),
   insights('insights'),
-  search('search');
+  search('search'),
+  privacyPolicy('/privacy-policy'),
+  termsOfService('/terms-of-service');
 
   final String path;
   const AppRoute(this.path);
@@ -58,9 +63,11 @@ final appRouterProvider = riverpod.Provider<GoRouter>((ref) {
       final isLoggedIn = authState.valueOrNull != null;
       final isLoggingIn = state.matchedLocation == AppRoute.login.path;
       final isOnQuotePage = state.matchedLocation == AppRoute.quote.path;
+      final isPrivacyPolicy = state.matchedLocation == AppRoute.privacyPolicy.path;
+      final isTermsOfService = state.matchedLocation == AppRoute.termsOfService.path;
 
       if (!isLoggedIn) {
-        return isLoggingIn ? null : AppRoute.login.path;
+        return (isLoggingIn || isPrivacyPolicy || isTermsOfService) ? null : AppRoute.login.path;
       }
 
       // User IS logged in
@@ -87,6 +94,16 @@ final appRouterProvider = riverpod.Provider<GoRouter>((ref) {
         path: AppRoute.quote.path,
         name: AppRoute.quote.name,
         builder: (_, __) => const QuoteScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.privacyPolicy.path,
+        name: AppRoute.privacyPolicy.name,
+        builder: (_, __) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.termsOfService.path,
+        name: AppRoute.termsOfService.name,
+        builder: (_, __) => const TermsOfServiceScreen(),
       ),
 
       // ── Main Shell ────────────────────────────────────────
@@ -128,9 +145,9 @@ final appRouterProvider = riverpod.Provider<GoRouter>((ref) {
           GoRoute(
             path: 'feedback',
             name: AppRoute.feedback.name,
-            builder: (_, __) => const _PlaceholderScreen(title: 'Feedback'),
+            builder: (_, __) => const FeedbackScreen(),
           ),
-          GoRoute(
+           GoRoute(
             path: 'settings',
             name: AppRoute.settings.name,
             builder: (_, __) => const SettingsScreen(),

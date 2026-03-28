@@ -165,7 +165,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                   final display = displayCtrl.text.isNotEmpty ? displayCtrl.text : addressCtrl.text;
                   if (addressCtrl.text.isNotEmpty) {
                     final text = _controller.text;
-                    _controller.text = text + (text.isEmpty ? '' : ' ') + '[$display](${addressCtrl.text})';
+                    _controller.text = '$text${text.isEmpty ? '' : ' '}[$display](${addressCtrl.text})';
                     _controller.selection = TextSelection.collapsed(offset: _controller.text.length);
                   }
                   context.pop();
@@ -268,7 +268,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       String after = selection.textAfter(text);
 
       if (before.isNotEmpty && !before.endsWith('\n')) before += '\n';
-      if (after.isNotEmpty && !after.startsWith('\n')) after = '\n' + after;
+      if (after.isNotEmpty && !after.startsWith('\n')) after = '\n$after';
 
       List<String> lines = selectedText.split('\n');
       for (int i = 0; i < lines.length; i++) {
@@ -285,10 +285,14 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
       if (cursorPosition < 0) cursorPosition = text.length;
 
       int lineStart = cursorPosition;
-      while (lineStart > 0 && text[lineStart - 1] != '\n') lineStart--;
+      while (lineStart > 0 && text[lineStart - 1] != '\n') {
+        lineStart--;
+      }
 
       int lineEnd = cursorPosition;
-      while (lineEnd < text.length && text[lineEnd] != '\n') lineEnd++;
+      while (lineEnd < text.length && text[lineEnd] != '\n') {
+        lineEnd++;
+      }
 
       String currentLine = text.substring(lineStart, lineEnd);
       currentLine = currentLine.replaceFirst(replaceRegex, '');
@@ -751,12 +755,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
                             child: Row(
                               children: [
-                                Icon(icon, size: 18, color: enabled ? textColor : textColor.withOpacity(0.3)),
+                                Icon(icon, size: 18, color: enabled ? textColor : textColor.withValues(alpha: 0.3)),
                                 const SizedBox(width: 14),
                                 Text(label,
                                     style: TextStyle(
                                         fontSize: 13,
-                                        color: enabled ? textColor : textColor.withOpacity(0.3))),
+                                        color: enabled ? textColor : textColor.withValues(alpha: 0.3))),
                               ],
                             ),
                           ),
@@ -787,12 +791,12 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(icon, size: 22,
-                                      color: enabled ? textColor : textColor.withOpacity(0.3)),
+                                      color: enabled ? textColor : textColor.withValues(alpha: 0.3)),
                                   const SizedBox(height: 4),
                                   Text(label,
                                       style: TextStyle(
                                           fontSize: 11,
-                                          color: enabled ? textColor : textColor.withOpacity(0.3))),
+                                          color: enabled ? textColor : textColor.withValues(alpha: 0.3))),
                                 ],
                               ),
                             ),
@@ -810,7 +814,7 @@ class _NotesScreenState extends ConsumerState<NotesScreen> {
                           border: Border.all(color: isDark ? Colors.white10 : Colors.black12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(isDark ? 0.5 : 0.15),
+                              color: Colors.black.withValues(alpha: isDark ? 0.5 : 0.15),
                               blurRadius: 16,
                               offset: const Offset(0, 4),
                             ),
@@ -947,7 +951,6 @@ class _PopupMenuButton extends StatelessWidget {
   final bool isDark;
 
   const _PopupMenuButton({
-    super.key,
     required this.title,
     required this.items,
     required this.onSelected,

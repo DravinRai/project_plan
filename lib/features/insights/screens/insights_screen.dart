@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../data/models/task_model.dart';
@@ -256,7 +255,7 @@ class _BarChartCard extends StatelessWidget {
         Text('7-Day Overview', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: isDark ? Colors.white : Colors.black87)),
         const SizedBox(height: 20),
         SizedBox(
-          height: 120,
+          height: 160,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: weekData.map((d) {
@@ -289,9 +288,9 @@ class _BarChartCard extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Row(children: [
-          _BarLegend(color: AppColors.primary, label: 'Today'),
+          const _BarLegend(color: AppColors.primary, label: 'Today'),
           const SizedBox(width: 12),
-          _BarLegend(color: AppColors.assigned, label: 'Completed'),
+          const _BarLegend(color: AppColors.assigned, label: 'Completed'),
           const SizedBox(width: 12),
           _BarLegend(color: isDark ? Colors.white10 : Colors.black12, label: 'Total'),
         ]),

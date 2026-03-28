@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../core/router/app_router.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -10,12 +10,13 @@ import '../../../core/theme/app_colors.dart';
 import '../providers/settings_provider.dart';
 
 // ── Custom Colors from M3 Mockup ─────────────
-const _m3SettingsBgList    = Color(0xFFF0FDF4); // Very light mint green for list area
-const _m3SettingsBgHeader  = Color(0xFFD1E4E0); // Deeper slate/mint for header
-const _m3SettingsCard      = Color(0xFFDFEAE8); // Light grayish mint for list cards
-const _m3IconColor         = Color(0xFF3F4947); // Dark grayish green for icons and text
-const _m3ListTextColor     = Color(0xFF191C1B); // Almost black for list text
-const _m3DividerColor      = Color(0xFFC4C7C5); // Subtle divider
+// ── Refined Colors (Neutral Slate/Gray) ─────────────
+const _refinedSettingsBgList    = Color(0xFFF1F5F9); // Neutral slate light
+const _refinedSettingsBgHeader  = Color(0xFFE2E8F0); // Slightly darker slate for header
+const _refinedSettingsCard      = Color(0xFFFFFFFF); // White cards
+const _refinedIconColor         = Color(0xFF475569); // Slate 600
+const _refinedListTextColor     = Color(0xFF1E293B); // Slate 900
+const _refinedDividerColor      = Color(0xFFCBD5E1); // Slate 300
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -56,12 +57,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final bgList = isDark ? AppColors.surfaceDark : _m3SettingsBgList;
-    final bgHeader = isDark ? AppColors.cardDarkElevated : _m3SettingsBgHeader;
-    final cardBg = isDark ? AppColors.cardDarkElevated : _m3SettingsCard;
-    final iconColor = isDark ? Colors.white70 : _m3IconColor;
-    final textColor = isDark ? Colors.white : _m3ListTextColor;
-    final dividerColor = isDark ? AppColors.dividerDark : _m3DividerColor;
+    final bgList = isDark ? AppColors.surfaceDark : _refinedSettingsBgList;
+    final bgHeader = isDark ? AppColors.cardDarkElevated : _refinedSettingsBgHeader;
+    final cardBg = isDark ? AppColors.cardDarkElevated : _refinedSettingsCard;
+    final iconColor = isDark ? Colors.white70 : _refinedIconColor;
+    final textColor = isDark ? Colors.white : _refinedListTextColor;
+    final dividerColor = isDark ? AppColors.dividerDark : _refinedDividerColor;
 
     return Scaffold(
       backgroundColor: bgList,
@@ -127,10 +128,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       onChanged: (val) {
                         ref.read(settingsProvider.notifier).toggleNotifications(val);
                       },
-                      activeColor: Colors.white,
+                      activeThumbColor: Colors.white,
                       activeTrackColor: const Color(0xFF3B6856), // Dark green track
                       inactiveThumbColor: iconColor, // The thumb itself
-                      inactiveTrackColor: dividerColor.withOpacity(0.5), // Visible track instead of transparent
+                      inactiveTrackColor: dividerColor.withValues(alpha: 0.5), // Visible track instead of transparent
                       secondary: Icon(Icons.notifications_none_rounded, color: iconColor),
                       title: Text('Notifications', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
@@ -151,7 +152,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                           leading: Icon(Icons.palette_outlined, color: iconColor),
                           title: Text('Theme', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
-                          subtitle: Text(_themeModeString(settings.themeMode), style: TextStyle(color: textColor.withOpacity(0.7), fontSize: 13)),
+                          subtitle: Text(_themeModeString(settings.themeMode), style: TextStyle(color: textColor.withValues(alpha: 0.7), fontSize: 13)),
                           onTap: () async {
                             final mode = await showDialog<ThemeMode>(
                               context: context,
@@ -161,8 +162,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                   return RadioListTile<ThemeMode>(
                                     title: Text(_themeModeString(m)),
                                     value: m,
-                                    groupValue: settings.themeMode,
-                                    onChanged: (val) => Navigator.pop(context, val),
+                                    groupValue: settings.themeMode, // ignore: deprecated_member_use
+                                    onChanged: (val) => Navigator.pop(context, val), // ignore: deprecated_member_use
                                   );
                                 }).toList(),
                               ),
@@ -174,13 +175,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(height: 1, thickness: 1, color: dividerColor.withOpacity(0.5)),
+                          child: Divider(height: 1, thickness: 1, color: dividerColor.withValues(alpha: 0.5)),
                         ),
                         ListTile(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                           leading: Icon(Icons.language_rounded, color: iconColor),
                           title: Text('Language', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
-                          subtitle: Text(_languageString(settings.languageCode), style: TextStyle(color: textColor.withOpacity(0.7), fontSize: 13)),
+                          subtitle: Text(_languageString(settings.languageCode), style: TextStyle(color: textColor.withValues(alpha: 0.7), fontSize: 13)),
                           onTap: () async {
                             final code = await showDialog<String>(
                               context: context,
@@ -190,8 +191,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                   return RadioListTile<String>(
                                     title: Text(_languageString(c)),
                                     value: c,
-                                    groupValue: settings.languageCode,
-                                    onChanged: (val) => Navigator.pop(context, val),
+                                    groupValue: settings.languageCode, // ignore: deprecated_member_use
+                                    onChanged: (val) => Navigator.pop(context, val), // ignore: deprecated_member_use
                                   );
                                 }).toList(),
                               ),
@@ -235,7 +236,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                     child: pw.Column(
                                       mainAxisAlignment: pw.MainAxisAlignment.center,
                                       children: [
-                                        pw.Text('Project Plan - User Data Export', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+                                        pw.Text('Pie - User Data Export', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
                                         pw.SizedBox(height: 20),
                                         pw.Text('Export Date: ${DateTime.now().toString()}'),
                                         pw.SizedBox(height: 40),
@@ -248,26 +249,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                               ),
                             );
 
-                            await Printing.sharePdf(bytes: await pdf.save(), filename: 'project_plan_export.pdf');
+                            await Printing.sharePdf(bytes: await pdf.save(), filename: 'pie_export.pdf');
                           },
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(height: 1, thickness: 1, color: dividerColor.withOpacity(0.5)),
+                          child: Divider(height: 1, thickness: 1, color: dividerColor.withValues(alpha: 0.5)),
                         ),
                         ListTile(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                           leading: Icon(Icons.shield_outlined, color: iconColor),
                           title: Text('Privacy Policy', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
-                          onTap: () async {
-                             const urlString = 'https://policies.google.com/privacy'; // Placeholder
-                             final Uri url = Uri.parse(urlString);
-                             if (!await launchUrl(url)) {
-                               if (context.mounted) {
-                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Could not launch privacy policy'), behavior: SnackBarBehavior.floating));
-                               }
-                             }
-                          },
+                          onTap: () => context.pushNamed(AppRoute.privacyPolicy.name),
                         ),
                       ],
                     ),
@@ -282,12 +275,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   Container(
                     decoration: BoxDecoration(
                       color: cardBg,
-                      borderRadius: BorderRadius.circular(40), // More rounded for single item bottom
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      leading: Icon(Icons.info_outline_rounded, color: iconColor),
-                      title: Text('Version 2.1.0', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          leading: Icon(Icons.help_outline_rounded, color: iconColor),
+                          title: Text('Help & Feedback', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
+                          onTap: () => context.pushNamed(AppRoute.feedback.name),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(height: 1, thickness: 1, color: dividerColor.withValues(alpha: 0.5)),
+                        ),
+                        ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                          leading: Icon(Icons.info_outline_rounded, color: iconColor),
+                          title: Text('Version 2.1.0', style: TextStyle(color: textColor, fontWeight: FontWeight.w500)),
+                        ),
+                      ],
                     ),
                   ),
                   

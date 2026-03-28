@@ -52,8 +52,8 @@ class PdfGenerator {
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       crossAxisAlignment: pw.CrossAxisAlignment.end,
       children: [
-        pw.Text('Project Plan', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue800)),
-        pw.Text(dateStr, style: pw.TextStyle(fontSize: 14, color: PdfColors.grey600)),
+        pw.Text('Pie', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold, color: PdfColors.blue800)),
+        pw.Text(dateStr, style: const pw.TextStyle(fontSize: 14, color: PdfColors.grey600)),
       ]
     );
   }
@@ -108,7 +108,7 @@ class PdfGenerator {
                 pw.SizedBox(height: 2),
                 pw.Text(
                   '$timeStr ($durationStr) ${task.category?.name.toUpperCase() ?? ''}',
-                  style: pw.TextStyle(fontSize: 10, color: PdfColors.grey600),
+                  style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey600),
                 ),
                 if (task.notes != null && task.notes!.isNotEmpty) ...[
                   pw.SizedBox(height: 4),

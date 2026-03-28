@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../data/models/task_model.dart';
 
 class _TaskLayout {
@@ -61,7 +60,9 @@ class ClockPainter extends CustomPainter {
            }
          }
          int t = 0;
-         while (used.contains(t)) t++;
+         while (used.contains(t)) {
+           t++;
+         }
          tracks[i] = t;
          if (t > maxTrack) maxTrack = t;
       }
@@ -102,7 +103,7 @@ class ClockPainter extends CustomPainter {
     // ── 1. Draw Clock Face Background ─────────────────────────
     // Soft outer shadow
     final shadowPath = Path()..addOval(Rect.fromCircle(center: center, radius: faceRadius));
-    canvas.drawShadow(shadowPath, Colors.black.withOpacity(isDark ? 0.3 : 0.1), 8, true);
+    canvas.drawShadow(shadowPath, Colors.black.withValues(alpha: isDark ? 0.3 : 0.1), 8, true);
     
     // Main face circle
     final facePaint = Paint()
@@ -148,7 +149,7 @@ class ClockPainter extends CustomPainter {
             canvas.drawPath(path, Paint()..color = baseColor ..style = PaintingStyle.fill);
         } else {
             // Muted inner chunk + bright stroke
-            canvas.drawPath(path, Paint()..color = baseColor.withOpacity(0.2) ..style = PaintingStyle.fill);
+            canvas.drawPath(path, Paint()..color = baseColor.withValues(alpha: 0.2) ..style = PaintingStyle.fill);
             canvas.drawPath(path, Paint()
                ..color = baseColor 
                ..style = PaintingStyle.stroke 
@@ -213,7 +214,7 @@ class ClockPainter extends CustomPainter {
         if (isDone) {
             final bracketRadius = faceRadius + 14; 
             final bracketPaint = Paint()
-              ..color = baseColor.withOpacity(0.4)
+              ..color = baseColor.withValues(alpha: 0.4)
               ..style = PaintingStyle.stroke
               ..strokeWidth = 4
               ..strokeCap = StrokeCap.round;

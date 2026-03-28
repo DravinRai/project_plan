@@ -88,7 +88,7 @@ class _ConfettiPainter extends CustomPainter {
       final y = baseY + progress * 200;
 
       final paint = Paint()
-        ..color = color.withOpacity(alpha)
+        ..color = color.withValues(alpha: alpha)
         ..style = PaintingStyle.fill;
 
       // Alternate between circles and squares

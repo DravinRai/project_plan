@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-/// Light and Dark ThemeData for Project Plan.
+/// Light and Dark ThemeData for Pie.
 /// Uses Material 3 with a ColorScheme.fromSeed(seedColor: AppColors.primary).
 abstract class AppTheme {
   static ThemeData light(Color primaryColor) => _buildTheme(Brightness.light, primaryColor);
@@ -60,7 +60,7 @@ abstract class AppTheme {
 
       // ── Divider ─────────────────────────────────────────────
       dividerTheme: DividerThemeData(
-        color: isDark ? AppColors.dividerDark.withOpacity(0.5) : AppColors.dividerLight,
+        color: isDark ? AppColors.dividerDark.withValues(alpha: 0.5) : AppColors.dividerLight,
         thickness: 1,
         space: 0,
       ),
@@ -132,7 +132,7 @@ abstract class AppTheme {
       // ── Navigation Bar ───────────────────────────────────────
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        indicatorColor: primaryColor.withOpacity(0.15),
+        indicatorColor: primaryColor.withValues(alpha: 0.15),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         elevation: 0,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {

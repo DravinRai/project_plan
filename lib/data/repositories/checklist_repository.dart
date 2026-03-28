@@ -14,10 +14,8 @@ class ChecklistRepository {
   // ── Create ────────────────────────────────────────────────
 
   Future<String> createItem(String uid, ChecklistItem item) async {
-    print('[CHECKLIST REPO] createItem for $uid: ${item.title}');
     final ref  = _col(uid).doc();
     await ref.set(item.toFirestore());
-    print('[CHECKLIST REPO] success: ${ref.id}');
     return ref.id;
   }
 

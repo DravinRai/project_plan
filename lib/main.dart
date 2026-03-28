@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:convert';
+import 'dart:ui';
+import 'dart:io' show Platform;
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'firebase_options.dart';
 
 import 'core/router/app_router.dart';
@@ -21,10 +29,51 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // ── Hive initialization ──────────────────────────────────────
+  // ── Firebase Crashlytics ──────────────────────────────────────
+  if (!kIsWeb && (Platform.isAndroid || Platform.isIOS || Platform.isMacOS)) {
+    // Pass all uncaught Flutter framework errors to Crashlytics
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    // Pass all uncaught asynchronous errors to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+  }
+
+  // ── Firebase Analytics ────────────────────────────────────────
+  if (kIsWeb || Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
+    await FirebaseAnalytics.instance.logAppOpen();
+  }
+
+  // ── Firebase App Check ────────────────────────────────────────
+  if (kIsWeb || Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
+    await FirebaseAppCheck.instance.activate(
+      androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+      appleProvider: AppleProvider.appAttest,
+    );
+  }
+
+  // ── Hive initialization (Secure) ───────────────────────────
   await Hive.initFlutter();
   Hive.registerAdapter(NoteModelAdapter());
-  await Hive.openBox<NoteModel>('notes');
+  
+  // Initialize with encryption key from secure storage
+  const secureStorage = FlutterSecureStorage();
+  String? base64Key = await secureStorage.read(key: 'hive_encryption_key');
+  if (base64Key == null) {
+    final key = Hive.generateSecureKey();
+    await secureStorage.write(
+      key: 'hive_encryption_key', 
+      value: base64UrlEncode(key),
+    );
+    base64Key = base64UrlEncode(key);
+  }
+  final encryptionKey = base64Url.decode(base64Key);
+  
+  await Hive.openBox<NoteModel>(
+    'notes', 
+    encryptionCipher: HiveAesCipher(encryptionKey),
+  );
 
   // ── Notifications ─────────────────────────────────────────────
   await NotificationService.instance.init();
@@ -76,7 +125,7 @@ class _ProjectPlanAppState extends ConsumerState<ProjectPlanApp> {
 
     return _KeyboardShortcutsWrapper(
       child: MaterialApp.router(
-        title: 'Project Plan',
+        title: 'Pie',
         theme: AppTheme.light(primaryColor),
         darkTheme: AppTheme.dark(primaryColor),
         themeMode: settings.themeMode,

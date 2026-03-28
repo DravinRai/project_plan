@@ -102,10 +102,22 @@ class ChecklistScreen extends ConsumerWidget {
       ),
       body: activitiesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) {
+          final msg = e.toString();
+          if (msg.contains('permission-denied') || msg.contains('PERMISSION_DENIED')) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Center(child: Text('Error: $msg'));
+        },
         data: (tasks) => checklistAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text('Error: $e')),
+          error: (e, _) {
+            final msg = e.toString();
+            if (msg.contains('permission-denied') || msg.contains('PERMISSION_DENIED')) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Center(child: Text('Error: $msg'));
+          },
           data: (items) {
             final activeTasks = tasks.where((t) => t.status != TaskStatus.completed).toList();
             final completedTasks = tasks.where((t) => t.status == TaskStatus.completed).toList();
@@ -183,7 +195,7 @@ class ChecklistScreen extends ConsumerWidget {
             image: isNetwork ? NetworkImage(bgUrl) as ImageProvider : FileImage(File(bgUrl)),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              isDark ? Colors.black.withOpacity(0.7) : Colors.white.withOpacity(0.8),
+              isDark ? Colors.black.withValues(alpha: 0.7) : Colors.white.withValues(alpha: 0.8),
               BlendMode.darken,
             ),
           ),
@@ -235,21 +247,20 @@ class ChecklistScreen extends ConsumerWidget {
   }
 
   void _showThemeDialog(BuildContext context, WidgetRef ref) {
-    final currentMode = ref.read(themeModeProvider);
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Change Theme'),
+      builder: (ctx) => const AlertDialog(
+        title: Text('Change Theme'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('App Appearance', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const ThemeToggleSwitch(),
-            const SizedBox(height: 16),
-            const Text('Color Way', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
+            Text('App Appearance', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            ThemeToggleSwitch(),
+            SizedBox(height: 16),
+            Text('Color Way', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -271,10 +282,10 @@ class ChecklistScreen extends ConsumerWidget {
                 _ColorPickerCircle(color: Colors.deepOrange, label: 'Deep Orange'),
               ],
             ),
-            const SizedBox(height: 16),
-            const Text('Background Photo', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const Wrap(
+            SizedBox(height: 16),
+            Text('Background Photo', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Wrap(
               spacing: 12,
               runSpacing: 12,
               children: [
@@ -621,9 +632,9 @@ class _ActivityTile extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: isDark ? Colors.blue.withOpacity(0.2) : Colors.blue.shade50,
+                        color: isDark ? Colors.blue.withValues(alpha: 0.2) : Colors.blue.shade50,
                         borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: Colors.blue.withOpacity(0.5)),
+                        border: Border.all(color: Colors.blue.withValues(alpha: 0.5)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

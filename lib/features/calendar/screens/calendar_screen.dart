@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +32,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final cardTheme = Theme.of(context).cardTheme;
     final bg = Theme.of(context).scaffoldBackgroundColor;
     final cardBg = cardTheme.color ?? colorScheme.surface;
-    final divBorder = colorScheme.outlineVariant.withOpacity(0.5);
+    final divBorder = colorScheme.outlineVariant.withValues(alpha: 0.5);
     final textColor = colorScheme.onSurface;
     final subColor = colorScheme.onSurfaceVariant;
 
@@ -85,7 +84,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
                         child: Text(
                           DateFormat('EEEE, d MMMM').format(_selectedDay!).toUpperCase(),
-                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: subColor, letterSpacing: 1),
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: subColor, letterSpacing: 1),
                         ),
                       ),
                     ),
@@ -118,7 +117,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-                      child: Text('PAST PERFORMANCE', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: subColor, letterSpacing: 1)),
+                      child: Text('PAST PERFORMANCE', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: subColor, letterSpacing: 1)),
                     ),
                   ),
                   SliverPadding(
@@ -187,15 +186,7 @@ class _MonthCalendar extends StatelessWidget {
     required this.onDayTap,
   });
 
-  Color _statusColor(TaskStatus? status) {
-    if (status == null) return Colors.transparent;
-    return switch (status) {
-      TaskStatus.completed => colorScheme.tertiary,
-      TaskStatus.missed => colorScheme.error,
-      TaskStatus.remaining => colorScheme.outline,
-      TaskStatus.assigned => colorScheme.secondary,
-    };
-  }
+
 
   Color _dotColor(List<TaskModel>? tasks) {
     if (tasks == null || tasks.isEmpty) return Colors.transparent;
@@ -231,7 +222,7 @@ class _MonthCalendar extends StatelessWidget {
               IconButton(onPressed: onPrev, icon: Icon(Icons.chevron_left_rounded, size: 20, color: subColor)),
               Text(
                 DateFormat('MMMM yyyy').format(viewMonth),
-                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: textColor),
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: textColor),
               ),
               IconButton(onPressed: onNext, icon: Icon(Icons.chevron_right_rounded, size: 20, color: subColor)),
             ],
@@ -244,7 +235,7 @@ class _MonthCalendar extends StatelessWidget {
               return SizedBox(
                 width: 36,
                 child: Center(
-                  child: Text(d, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: subColor)),
+                  child: Text(d, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: subColor)),
                 ),
               );
             }).toList(),
@@ -258,7 +249,7 @@ class _MonthCalendar extends StatelessWidget {
               crossAxisCount: 7,
               mainAxisSpacing: 4,
               crossAxisSpacing: 0,
-              childAspectRatio: 3.5, // Horizontal stretch as per image
+              childAspectRatio: 2.8, // Adjusted for larger fonts
             ),
             itemCount: startOffset + daysInMonth,
             itemBuilder: (context, index) {
@@ -282,12 +273,12 @@ class _MonthCalendar extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected 
                       ? colorScheme.primary 
-                      : (isToday ? colorScheme.primary.withOpacity(0.1) : Colors.transparent),
+                      : (isToday ? colorScheme.primary.withValues(alpha: 0.1) : Colors.transparent),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: isSelected 
                         ? colorScheme.primary 
-                        : (isToday ? colorScheme.primary.withOpacity(0.5) : Colors.transparent),
+                        : (isToday ? colorScheme.primary.withValues(alpha: 0.5) : Colors.transparent),
                       width: 1.2,
                     ),
                   ),
@@ -297,7 +288,7 @@ class _MonthCalendar extends StatelessWidget {
                         Text(
                           '$dayNum',
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 13,
                             fontWeight: isToday || isSelected ? FontWeight.w800 : FontWeight.w500,
                             color: isSelected
                                 ? colorScheme.onPrimary
@@ -314,7 +305,7 @@ class _MonthCalendar extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: isSelected ? null : [
                               BoxShadow(
-                                color: dot.withOpacity(0.4),
+                                color: dot.withValues(alpha: 0.4),
                                 blurRadius: 4,
                                 spreadRadius: 1,
                               )
@@ -356,7 +347,7 @@ class _Legend extends StatelessWidget {
     return Row(children: [
       Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
       const SizedBox(width: 4),
-      Text(label, style: TextStyle(fontSize: 10, color: colorScheme.onSurfaceVariant.withOpacity(0.6))),
+      Text(label, style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6))),
     ]);
   }
 }
@@ -407,9 +398,9 @@ class _DayTaskTile extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                         decoration: BoxDecoration(
-                          color: colorScheme.primary.withOpacity(0.1),
+                          color: colorScheme.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
-                          border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
+                          border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2)),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -472,7 +463,7 @@ class _PerformanceTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: pctColor.withOpacity(0.1),
+              color: pctColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(Icons.check_circle_rounded, color: pctColor, size: 20),
@@ -490,7 +481,7 @@ class _PerformanceTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: pctColor.withOpacity(0.12),
+              color: pctColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text('$pct%', style: TextStyle(fontWeight: FontWeight.w700, color: pctColor, fontSize: 13)),
@@ -509,9 +500,9 @@ class _EmptyDayState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(children: [
-        Icon(Icons.event_busy_rounded, size: 32, color: colorScheme.onSurface.withOpacity(0.2)),
+        Icon(Icons.event_busy_rounded, size: 32, color: colorScheme.onSurface.withValues(alpha: 0.2)),
         const SizedBox(height: 8),
-        Text('No tasks on this day', style: TextStyle(color: colorScheme.onSurfaceVariant.withOpacity(0.5), fontSize: 13)),
+        Text('No tasks on this day', style: TextStyle(color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5), fontSize: 13)),
       ]),
     );
   }

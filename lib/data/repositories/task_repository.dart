@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/task_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -20,17 +22,32 @@ class TaskRepository {
   // ── Hive Box ─────────────────────────────────────────────
 
   Future<Box> get _box async {
-    if (!Hive.isBoxOpen(_hiveBoxName)) {
-      return Hive.openBox(_hiveBoxName);
+    if (Hive.isBoxOpen(_hiveBoxName)) {
+      return Hive.box(_hiveBoxName);
     }
-    return Hive.box(_hiveBoxName);
+    
+    const secureStorage = FlutterSecureStorage();
+    String? base64Key = await secureStorage.read(key: 'hive_encryption_key');
+    if (base64Key == null) {
+      final key = Hive.generateSecureKey();
+      await secureStorage.write(
+        key: 'hive_encryption_key', 
+        value: base64UrlEncode(key),
+      );
+      base64Key = base64UrlEncode(key);
+    }
+    final encryptionKey = base64Url.decode(base64Key);
+
+    return Hive.openBox(
+      _hiveBoxName,
+      encryptionCipher: HiveAesCipher(encryptionKey),
+    );
   }
 
   // ── Create ────────────────────────────────────────────────
 
   /// Creates a new task. Returns the generated [taskId].
   Future<String> createTask(String uid, TaskModel task) async {
-    print('[REPO] createTask for $uid');
     try {
       final ref  = _col(uid).doc(task.taskId);
       final now  = DateTime.now();
@@ -40,19 +57,15 @@ class TaskRepository {
         ..['createdAt'] = Timestamp.fromDate(now)
         ..['updatedAt'] = Timestamp.fromDate(now);
 
-      print('[REPO] setting doc: ${ref.id}');
       await ref.set(data);
 
       final savedTask = task.copyWith();
       final box = await _box;
-      print('[REPO] saving to Hive');
       await box.put(ref.id, _sanitizeForHive(savedTask.toFirestore()));
 
-      print('[REPO] success');
       return ref.id;
-    } catch (e, stack) {
-      print('[REPO] ERROR in createTask: $e');
-      print(stack);
+    } catch (e) {
+      // ignore: avoid_print
       rethrow;
     }
   }
@@ -97,7 +110,7 @@ class TaskRepository {
   Future<TaskModel?> getTask(String uid, String taskId) async {
     final doc = await _col(uid).doc(taskId).get();
     if (!doc.exists) return null;
-    return TaskModel.fromFirestore(doc as DocumentSnapshot<Map<String, dynamic>>);
+    return TaskModel.fromFirestore(doc);
   }
 
   // ── Update ────────────────────────────────────────────────
@@ -206,7 +219,6 @@ class TaskRepository {
 
   /// Bulk-marks overdue ASSIGNED/REMAINING tasks as MISSED.
   Future<void> autoDetectMissed(String uid, String date) async {
-    final now = DateTime.now();
     final tasks = await getTasksForDate(uid, date);
 
     final batch = _firestore.batch();

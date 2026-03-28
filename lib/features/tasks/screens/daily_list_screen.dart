@@ -45,7 +45,13 @@ class DailyListScreen extends ConsumerWidget {
       ),
       body: tasksAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error:   (e, _) => Center(child: Text('Error: $e')),
+        error:   (e, _) {
+          final msg = e.toString();
+          if (msg.contains('permission-denied') || msg.contains('PERMISSION_DENIED')) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Center(child: Text('Error: $msg'));
+        },
         data:    (tasks) => tasks.isEmpty
             ? _EmptyState(onAddTap: () => context.push('/home/task-editor'))
             : _TaskList(tasks: tasks, isDark: isDark),
@@ -137,7 +143,7 @@ class _TaskTile extends ConsumerWidget {
             width: 52,
             height: 52,
             decoration: BoxDecoration(
-              color: statusColor.withOpacity(0.1),
+              color: statusColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Icon(_getStatusIcon(task.status), color: statusColor, size: 26),
@@ -168,7 +174,7 @@ class _TaskTile extends ConsumerWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       alignment: align,
@@ -252,7 +258,7 @@ class _EmptyState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.event_available_rounded,
-              size: 72, color: AppColors.primary.withOpacity(0.2)),
+              size: 72, color: AppColors.primary.withValues(alpha: 0.2)),
           const SizedBox(height: 24),
           const Text(
             'Clear Schedule',

@@ -321,7 +321,7 @@ class _TaskEditorScreenState extends ConsumerState<TaskEditorScreen> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       decoration: BoxDecoration(
-                        color: _isImportant ? (isDark ? Colors.amber.withOpacity(0.2) : Colors.amber.shade50) : (isDark ? AppColors.cardDarkElevated : Colors.white),
+                        color: _isImportant ? (isDark ? Colors.amber.withValues(alpha: 0.2) : Colors.amber.shade50) : (isDark ? AppColors.cardDarkElevated : Colors.white),
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: _isImportant ? Colors.amber : (isDark ? AppColors.dividerDark : AppColors.dividerLight),

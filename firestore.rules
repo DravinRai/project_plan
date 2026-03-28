@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Lock down everything by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. User-owned data tree
+    // Any document under /users/{uid} (including subcollections like tasks, checklists)
+    // is accessible ONLY if the authenticated UID matches the path UID.
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+      
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+
+    // 3. Streaks — stored by UID at top level
+    match /streaks/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // 4. Legacy top-level tasks (if any old data exists here)
+    match /tasks/{taskId} {
+      allow read, update, delete: if request.auth != null && resource != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+  }
+}

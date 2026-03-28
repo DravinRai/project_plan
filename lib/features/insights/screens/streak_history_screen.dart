@@ -92,7 +92,7 @@ class _TopStreakCard extends ConsumerWidget {
     final cardDecoration = BoxDecoration(
       color: cardTheme.color ?? colorScheme.surface,
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
+      border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
     );
 
     return Container(
@@ -167,7 +167,7 @@ class _CalendarPathCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: cardTheme.color ?? colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
+        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
       ),
       child: Column(
         children: [
@@ -193,7 +193,7 @@ class _CalendarPathCard extends ConsumerWidget {
               return Text(
                 day,
                 style: TextStyle(
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.5),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -229,13 +229,13 @@ class _CalendarPathCard extends ConsumerWidget {
                       height: 28,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: isToday ? Border.all(color: colorScheme.primary.withOpacity(0.5), width: 1) : null,
+                        border: isToday ? Border.all(color: colorScheme.primary.withValues(alpha: 0.5), width: 1) : null,
                       ),
                       child: Center(
                         child: Text(
                           '$dayNum',
                           style: TextStyle(
-                            color: isToday ? colorScheme.primary : colorScheme.onSurfaceVariant.withOpacity(0.4),
+                            color: isToday ? colorScheme.primary : colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                             fontSize: 12,
                             fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
                           ),
@@ -315,7 +315,7 @@ class _MiniInsightCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardTheme.color ?? colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
+        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

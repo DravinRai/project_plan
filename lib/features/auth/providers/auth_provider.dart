@@ -8,6 +8,8 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository();
 });
 
+// NOTE: Auth providers must NOT use .autoDispose — they are app-lifetime streams.
+// Disposing them mid-navigation causes Firestore to run without auth → permission-denied.
 final authStateProvider = StreamProvider<User?>((ref) {
   return ref.watch(authRepositoryProvider).authStateChanges;
 });

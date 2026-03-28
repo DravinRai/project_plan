@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -6,11 +5,11 @@ import '../../../data/models/note_model.dart';
 
 const _notesBoxName = 'notes';
 
-final notesBoxProvider = Provider<Box<NoteModel>>((ref) {
+final notesBoxProvider = Provider.autoDispose<Box<NoteModel>>((ref) {
   return Hive.box<NoteModel>(_notesBoxName);
 });
 
-final notesProvider = StateNotifierProvider<NotesNotifier, List<NoteModel>>((ref) {
+final notesProvider = StateNotifierProvider.autoDispose<NotesNotifier, List<NoteModel>>((ref) {
   final box = ref.watch(notesBoxProvider);
   return NotesNotifier(box);
 });

@@ -205,9 +205,9 @@ class _TaskResult extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.blue.withOpacity(0.15) : Colors.blue.shade50,
+                            color: isDark ? Colors.blue.withValues(alpha: 0.15) : Colors.blue.shade50,
                             borderRadius: BorderRadius.circular(4),
-                            border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                            border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
                           ),
                           child: Text(
                             task.recurrence!.substring(0, 1).toUpperCase(),
@@ -265,7 +265,7 @@ class _NoteResult extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(Icons.description_outlined, color: AppColors.primary, size: 22),
+            const Icon(Icons.description_outlined, color: AppColors.primary, size: 22),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -312,7 +312,7 @@ class _HighlightedText extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w700,
               color: AppColors.primary,
-              backgroundColor: AppColors.primary.withOpacity(0.12),
+              backgroundColor: AppColors.primary.withValues(alpha: 0.12),
             ),
           ),
           TextSpan(text: text.substring(idx + query.length), style: TextStyle(fontWeight: FontWeight.w600, color: textColor)),
@@ -332,7 +332,7 @@ class _EmptySearch extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search_rounded, size: 64, color: subColor.withOpacity(0.4)),
+          Icon(Icons.search_rounded, size: 64, color: subColor.withValues(alpha: 0.4)),
           const SizedBox(height: 16),
           Text('Search tasks and notes', style: TextStyle(color: subColor, fontSize: 15)),
         ],
@@ -352,7 +352,7 @@ class _NoResults extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search_off_rounded, size: 64, color: subColor.withOpacity(0.4)),
+          Icon(Icons.search_off_rounded, size: 64, color: subColor.withValues(alpha: 0.4)),
           const SizedBox(height: 16),
           Text('No results for "$query"', style: TextStyle(color: subColor, fontSize: 15)),
         ],

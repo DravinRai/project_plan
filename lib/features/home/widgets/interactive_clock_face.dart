@@ -72,8 +72,12 @@ class _InteractiveClockFaceState extends ConsumerState<InteractiveClockFace> {
       double end = start + task.sweepAngleDegrees;
 
       // Normalize angles to handle midnight crossing
-      while (start >= 360) start -= 360;
-      while (end >= 360) end -= 360;
+      while (start >= 360) {
+        start -= 360;
+      }
+      while (end >= 360) {
+        end -= 360;
+      }
       
       bool isHit = false;
       if (end < start) {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/utils/firestore_utils.dart';
 
 /// Status of a task — mirrors the Firestore enum string.
 enum TaskStatus {
@@ -105,15 +106,13 @@ class TaskModel {
       userId:          data['userId']          as String? ?? '',
       title:           data['title']           as String? ?? '',
       date:            data['date']            as String? ?? '',
-      startTime:       (data['startTime']      as Timestamp).toDate(),
+      startTime:       FirestoreUtils.parseDateTime(data['startTime']),
       durationMinutes: data['durationMinutes'] as int?    ?? 30,
       status:          TaskStatus.values.firstWhere(
         (e) => e.name == (data['status'] as String? ?? 'assigned'),
         orElse: () => TaskStatus.assigned,
       ),
-      completedAt: data['completedAt'] != null
-          ? (data['completedAt'] as Timestamp).toDate()
-          : null,
+      completedAt: FirestoreUtils.tryParseDateTime(data['completedAt']),
       notes:    data['notes']    as String? ,
       category: data['category'] != null
           ? TaskCategory.values.firstWhere(
@@ -121,14 +120,12 @@ class TaskModel {
               orElse: () => TaskCategory.other,
             )
           : null,
-      dueDate: data['dueDate'] != null
-          ? (data['dueDate'] as Timestamp).toDate()
-          : null,
+      dueDate: FirestoreUtils.tryParseDateTime(data['dueDate']),
       reminder:   data['reminder']   as String?,
       recurrence: data['recurrence'] as String?,
       attachments: (data['attachments'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
-      updatedAt: (data['updatedAt'] as Timestamp).toDate(),
+      createdAt: FirestoreUtils.parseDateTime(data['createdAt']),
+      updatedAt: FirestoreUtils.parseDateTime(data['updatedAt']),
       isClockAssigned: data['isClockAssigned'] as bool? ?? false,
       isImportant: data['isImportant'] as bool? ?? false,
     );
