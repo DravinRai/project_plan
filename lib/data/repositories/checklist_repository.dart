@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../features/checklist/models/checklist_item.dart';
+import '../models/checklist_item.dart';
 
 /// Repository for checklist CRUD (Things to Remember).
 class ChecklistRepository {

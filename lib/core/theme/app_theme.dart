@@ -45,7 +45,7 @@ abstract class AppTheme {
       ),
 
       // ── Card ────────────────────────────────────────────────
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         elevation: 0,
         shape: RoundedRectangleBorder(
