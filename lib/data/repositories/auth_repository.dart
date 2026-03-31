@@ -227,12 +227,12 @@ class AuthRepository {
     }
 
     final String logoHtml = base64Logo != null 
-        ? '<img class="logo-icon" src="data:image/png;base64,${base64Logo}" alt="App Logo" />'
+        ? '<img class="logo-icon" src="data:image/png;base64,$base64Logo" alt="App Logo" />'
         : '<!-- No logo loaded -->';
     
     debugPrint('Auth Page: App icon loaded successfully, base64 length: ${base64Logo?.length ?? 0}');
 
-    final String errorHtml = '''
+    const String errorHtml = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -326,7 +326,7 @@ class AuthRepository {
 </head>
 <body>
   <div class="logo-container">
-    ${logoHtml}
+    $logoHtml
     <div class="logo-text">Pie</div>
   </div>
   <h1>Sign in complete</h1>
