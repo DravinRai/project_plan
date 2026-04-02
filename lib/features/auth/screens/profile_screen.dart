@@ -7,7 +7,7 @@ import 'dart:io';
 
 import '../providers/auth_provider.dart';
 import '../../tasks/providers/task_provider.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import '../../../core/theme/app_colors.dart';
 
 // ── Custom Colors from M3 Mockup ─────────────

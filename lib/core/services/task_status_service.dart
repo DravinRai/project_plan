@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import '../../features/tasks/providers/task_provider.dart';
 
 /// Runs a background timer every 60 seconds and auto-flips tasks to

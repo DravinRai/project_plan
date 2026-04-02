@@ -19,7 +19,7 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_provider.dart';
 import 'core/services/notification_service.dart';
 import 'core/services/task_status_service.dart';
-import 'data/models/note_model.dart';
+import 'package:project_plan/features/notes/models/note_model.dart';
 import 'features/settings/providers/settings_provider.dart';
 
 Future<void> main() async {

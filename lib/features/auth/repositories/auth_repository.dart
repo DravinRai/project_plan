@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart' as gsi;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import '../models/user_model.dart';
+import 'package:project_plan/features/auth/models/user_model.dart';
 
 /// Handles all authentication operations and Firestore user document management.
 class AuthRepository {

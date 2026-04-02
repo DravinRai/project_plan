@@ -10,8 +10,8 @@ import '../../../core/theme/theme_provider.dart';
 import '../../../core/utils/pdf_generator.dart';
 import '../providers/checklist_provider.dart';
 import '../../tasks/providers/task_provider.dart';
-import '../../../data/models/checklist_item.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/checklist/models/checklist_item.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import '../../../core/theme/widgets/theme_toggle_switch.dart';
 import '../../../core/widgets/completion_overlay.dart';
 

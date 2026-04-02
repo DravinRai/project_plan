@@ -1,4 +1,4 @@
-import '../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 
 /// Notification service stub — architecture is in place.
 /// Windows toast integration can be configured when 

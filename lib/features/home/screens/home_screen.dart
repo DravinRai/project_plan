@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/theme_provider.dart';
 import '../../../core/theme/widgets/theme_toggle_switch.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../settings/providers/settings_provider.dart';
 import '../../tasks/providers/task_provider.dart';

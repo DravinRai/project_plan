@@ -21,7 +21,7 @@ import '../../features/settings/screens/privacy_policy_screen.dart';
 import '../../features/settings/screens/terms_of_service_screen.dart';
 import '../../features/settings/screens/feedback_screen.dart';
 import '../../features/notes/screens/notes_screen.dart';
-import '../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 
 // ── Route Definitions ──────────────────────────────────────────
 

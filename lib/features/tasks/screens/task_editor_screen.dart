@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../providers/task_provider.dart';
 

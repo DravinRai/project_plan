@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/repositories/feedback_repository.dart';
-import '../../../data/models/feedback_model.dart';
+import 'package:project_plan/features/settings/repositories/feedback_repository.dart';
+import 'package:project_plan/features/settings/models/feedback_model.dart';
 import '../../auth/providers/auth_provider.dart';
 
 final feedbackRepositoryProvider = Provider<FeedbackRepository>((ref) {

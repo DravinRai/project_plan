@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../data/models/task_model.dart';
-import '../../../data/models/note_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
+import 'package:project_plan/features/notes/models/note_model.dart';
 import '../../tasks/providers/task_provider.dart';
 import '../../notes/providers/notes_provider.dart';
 

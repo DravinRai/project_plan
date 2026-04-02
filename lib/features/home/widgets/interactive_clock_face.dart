@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import 'clock_painter.dart';
 
 class InteractiveClockFace extends ConsumerStatefulWidget {

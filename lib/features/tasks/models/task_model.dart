@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../core/utils/firestore_utils.dart';
+import 'package:project_plan/core/utils/firestore_utils.dart';
 
 /// Status of a task — mirrors the Firestore enum string.
 enum TaskStatus {

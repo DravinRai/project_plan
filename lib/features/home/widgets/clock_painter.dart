@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 
 class _TaskLayout {
   final TaskModel task;

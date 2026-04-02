@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/feedback_model.dart';
+import 'package:project_plan/features/settings/models/feedback_model.dart';
 
 class FeedbackRepository {
   final FirebaseFirestore _firestore;

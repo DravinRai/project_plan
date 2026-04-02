@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../data/models/user_model.dart';
-import '../../../data/repositories/auth_repository.dart';
+import 'package:project_plan/features/auth/models/user_model.dart';
+import 'package:project_plan/features/auth/repositories/auth_repository.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository();

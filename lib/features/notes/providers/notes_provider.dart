@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
-import '../../../data/models/note_model.dart';
+import 'package:project_plan/features/notes/models/note_model.dart';
 
 const _notesBoxName = 'notes';
 

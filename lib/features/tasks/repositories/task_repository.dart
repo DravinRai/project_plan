@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 /// Repository for all task CRUD operations.

@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
-import '../../../data/models/task_model.dart';
-import '../../../data/repositories/task_repository.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
+import 'package:project_plan/features/tasks/repositories/task_repository.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // ── Repository Provider ───────────────────────────────────────

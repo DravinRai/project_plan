@@ -3,7 +3,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../../data/models/task_model.dart';
+import 'package:project_plan/features/tasks/models/task_model.dart';
 
 class PdfGenerator {
   /// Generates a PDF document for the given list of tasks and triggers the native print dialog.
