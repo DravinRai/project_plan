@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project_plan/features/checklist/models/checklist_item.dart';
 import 'package:project_plan/features/checklist/repositories/checklist_repository.dart';
 import '../../auth/providers/auth_provider.dart';

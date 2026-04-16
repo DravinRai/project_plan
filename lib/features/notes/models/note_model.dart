@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:project_plan/core/utils/firestore_utils.dart';
 
 part 'note_model.g.dart';
 
