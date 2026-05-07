@@ -47,10 +47,16 @@ Future<void> main() async {
 
   // ── Firebase App Check ────────────────────────────────────────
   if (kIsWeb || Platform.isAndroid || Platform.isIOS || Platform.isMacOS) {
-    await FirebaseAppCheck.instance.activate(
-      androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-      appleProvider: AppleProvider.appAttest,
-    );
+    try {
+      await FirebaseAppCheck.instance.activate(
+        androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+        appleProvider: AppleProvider.appAttest,
+      );
+    } catch (e) {
+      // App Check may fail on sideloaded / non-Play-certified builds.
+      // Log but do not crash – the app remains functional without it.
+      debugPrint('[AppCheck] activation failed: $e');
+    }
   }
 
   // ── Hive initialization (Secure) ───────────────────────────

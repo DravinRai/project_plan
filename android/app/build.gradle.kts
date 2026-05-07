@@ -25,7 +25,7 @@ android {
         create("release") {
             keyAlias = "pie"
             keyPassword = "***REMOVED_PASSWORD***"
-            storeFile = file("D:\\Project_02\\project_plan\\android\\pie-release.jks")
+            storeFile = file("../pie-release.jks")
             storePassword = "***REMOVED_PASSWORD***"
         }
     }
@@ -36,6 +36,7 @@ android {
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -57,4 +58,5 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    implementation("androidx.multidex:multidex:2.0.1")
 }

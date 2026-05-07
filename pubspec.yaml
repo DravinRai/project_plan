@@ -1,7 +1,7 @@
 name: project_plan
 description: A visual clock-based time blocking and habit consistency tracking app.
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
