@@ -10,6 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart' as gsi;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:project_plan/features/auth/models/user_model.dart';
+import 'package:project_plan/core/config/secrets.dart';
 
 /// Handles all authentication operations and Firestore user document management.
 class AuthRepository {
@@ -24,7 +25,7 @@ class AuthRepository {
           // Passing it explicitly on Android causes sign-in to fail.
           clientId: defaultTargetPlatform == TargetPlatform.android
               ? null
-              : '***REMOVED_CLIENT_ID***',
+              : Secrets.googleClientId,
         );
 
   final FirebaseAuth    _auth;  
@@ -191,7 +192,7 @@ class AuthRepository {
   }
 
   Future<(String?, String?)> _signInWithGoogleWindowsNative() async {
-    const clientId = '***REMOVED_CLIENT_ID***';
+    const clientId = Secrets.googleClientId;
     const port = 8080;
     const redirectUri = 'http://localhost:$port';
 
@@ -347,7 +348,7 @@ class AuthRepository {
       Uri.parse('https://oauth2.googleapis.com/token'),
       body: {
         'client_id': clientId,
-        'client_secret': '***REMOVED_SECRET***',
+        'client_secret': Secrets.googleClientSecret,
         'code': code,
         'code_verifier': verifier,
         'redirect_uri': redirectUri,

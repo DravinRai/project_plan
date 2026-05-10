@@ -21,12 +21,18 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
+    val keystorePropertiesFile = rootProject.file("key.properties")
+    val keystoreProperties = java.util.Properties()
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
+    }
+
     signingConfigs {
         create("release") {
-            keyAlias = "pie"
-            keyPassword = "***REMOVED_PASSWORD***"
-            storeFile = file("../pie-release.jks")
-            storePassword = "***REMOVED_PASSWORD***"
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storeFile = keystoreProperties["storeFile"]?.let { file(it as String) }
+            storePassword = keystoreProperties["storePassword"] as String?
         }
     }
 

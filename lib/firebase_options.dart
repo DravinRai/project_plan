@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:project_plan/core/config/secrets.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -50,7 +51,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: '***REMOVED_API_KEY***',
+    apiKey: Secrets.firebaseWindowsApiKey,
     appId: '1:313969971820:web:b32bfa772ebb02abd23e49',
     messagingSenderId: '313969971820',
     projectId: 'project-plan-dravin-85713',

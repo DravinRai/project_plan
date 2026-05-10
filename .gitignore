@@ -54,3 +54,6 @@ android/key.properties
 
 # Debug info from obfuscated builds
 /debug-info/
+
+# API Secrets
+lib/core/config/secrets.dart
