@@ -1,47 +1,69 @@
 # Project Plan 🕐
 
-> Visual clock-based time blocking + long-term consistency tracking app.
-> Built with Flutter + Firebase.
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)](https://firebase.google.com/)
+[![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+
+> **Visual clock-based time blocking + long-term consistency tracking app.**
+> Elevate your productivity with a meticulous daily schedule visualized on a custom-designed interactive clock face.
 
 ---
 
-## Prerequisites
+## ✨ Key Features
 
-| Tool | Version | Link |
-|---|---|---|
-| Flutter SDK | ≥ 3.19 | [Install Guide](https://docs.flutter.dev/get-started/install/windows/mobile) |
-| Dart SDK | ≥ 3.3 | Bundled with Flutter |
-| Android Studio | Latest | For emulator/device |
-| Firebase CLI | Latest | `npm install -g firebase-tools` |
-| FlutterFire CLI | Latest | `dart pub global activate flutterfire_cli` |
+- 🕒 **Interactive Clock Interface:** Drag and drop tasks directly onto a 24-hour clock face for intuitive scheduling.
+- 🔐 **Secure Authentication:** Seamless Google Sign-In and profile management.
+- ✅ **Dynamic Task Management:** Full CRUD operations for tasks with real-time Firestore synchronization.
+- 📜 **Daily Motivational Quotes:** Start your day inspired with curated quotes on a beautiful splash screen.
+- 📅 **Consistency Calendar:** Track your streaks and habits over months with an integrated calendar view.
+- 📊 **Deep Insights:** Visualize your productivity trends and task completion history.
+- 🔔 **Smart Notifications:** (In Progress) Timely reminders to keep you on track throughout the day.
 
 ---
 
-## Quick Start
+## 🛠️ Tech Stack
 
-### 1. Install Flutter & Run Setup Script
+| Layer | Technology |
+|---|---|
+| **Framework** | [Flutter](https://flutter.dev) (Dart) |
+| **State Management** | [Riverpod 2](https://riverpod.dev) |
+| **Navigation** | [Go Router](https://pub.dev/packages/go_router) |
+| **Backend** | [Firebase](https://firebase.google.com/) (Auth, Firestore, FCM, Analytics, Remote Config) |
+| **Local Storage** | [Hive](https://pub.dev/packages/hive) |
+| **Styling** | Custom Design System (OLED Dark Mode optimized) |
+
+---
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+
+Ensure you have the following installed:
+- **Flutter SDK** ≥ 3.19
+- **Firebase CLI** (`npm install -g firebase-tools`)
+- **FlutterFire CLI** (`dart pub global activate flutterfire_cli`)
+
+### 2. Initialization
 
 ```powershell
-# After installing Flutter and adding to PATH:
-cd d:\Project_02\project_plan
+# Clone the repository and navigate to the project
+cd project_plan
+
+# Run the automated setup script
 .\setup.ps1
 ```
 
-### 2. Configure Firebase
+### 3. Firebase Configuration
 
 ```bash
-# Login to Firebase
+# Login to your Firebase account
 firebase login
 
-# Configure FlutterFire (generates firebase_options.dart)
+# Configure FlutterFire (this generates lib/firebase_options.dart)
 flutterfire configure
 ```
 
-Then manually:
-- Copy `google-services.json` → `android/app/`
-- Copy `GoogleService-Info.plist` → `ios/Runner/`
-
-### 3. Run the App
+### 4. Run the App
 
 ```bash
 flutter run
@@ -49,49 +71,53 @@ flutter run
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
-```
+```text
 lib/
 ├── core/
-│   ├── theme/           # Color tokens, typography, ThemeData
-│   ├── router/          # Go Router configuration (12 screens)
-│   └── firebase/        # Firebase initialization
+│   ├── theme/           # Color tokens, typography, custom themes
+│   ├── router/          # Comprehensive Go Router configuration
+│   └── services/        # Firebase, Notifications, and Core business logic
 ├── features/
-│   ├── auth/            # Google Sign-In, profile screen
-│   ├── quote/           # Daily motivational quote splash
-│   ├── tasks/           # Task CRUD, daily list view
-│   ├── clock/           # CustomPainter clock face (Sprint 3)
-│   ├── checklist/       # Things to Remember
-│   ├── calendar/        # Monthly calendar + streak (Sprint 5)
-│   └── feedback/        # In-app feedback form (Sprint 5)
+│   ├── auth/            # OAuth flows and user profile
+│   ├── home/            # The main interactive clock dashboard
+│   ├── tasks/           # Task creation, editing, and list management
+│   ├── calendar/        # Monthly habit and streak tracking
+│   ├── insights/        # Productivity analytics and history
+│   ├── checklist/       # "Things to Remember" utility
+│   ├── notes/           # Quick note-taking feature
+│   ├── search/          # Global task and history search
+│   ├── settings/        # App preferences and user configuration
+│   └── quote/           # Daily inspiration engine
 ├── data/
-│   ├── models/          # Task, User, Checklist Firestore models
-│   ├── repositories/    # Firestore + Hive repositories
-│   └── providers/       # Riverpod data layer providers
-└── main.dart
+│   ├── models/          # Strongly typed Firestore entities
+│   ├── repositories/    # Data access layer (Firestore + Hive)
+│   └── providers/       # Riverpod state providers
+└── main.dart            # Application entry point
 ```
 
 ---
 
-## Sprint Status
+## 📈 Roadmap & Sprint Status
 
 | Sprint | Feature Area | Status |
-|---|---|---|
-| 0 | Project Setup + Design System | ✅ Complete |
-| 1 | Auth + Daily Quote | ✅ Complete |
-| 2 | Task CRUD + Checklist | 🔲 Pending |
-| 3 | Clock Interface | 🔲 Pending |
-| 4 | Task Lifecycle + Notifications | 🔲 Pending |
-| 5 | Calendar + History + Polish | 🔲 Pending |
+|:---:|---|:---:|
+| **0** | Project Foundation & Design System | ✅ |
+| **1** | Authentication & Daily Motivation | ✅ |
+| **2** | Core Task Management (CRUD) | ✅ |
+| **3** | Interactive Clock Interface | ✅ |
+| **4** | Task Lifecycle & Push Notifications | 🟡 |
+| **5** | Analytics, History & Polish | ✅ |
 
 ---
 
-## Tech Stack
+## 🤝 Contributing
 
-- **Framework:** Flutter (Dart)
-- **State:** Riverpod 2
-- **Navigation:** Go Router
-- **Backend:** Firebase (Auth, Firestore, FCM, Analytics, Crashlytics)
-- **Local Cache:** Hive
-- **Notifications:** `flutter_local_notifications` + FCM
+We welcome contributions! Please feel free to submit Pull Requests or open issues for bugs and feature requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
